@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const { selectAllMember, findEmail, createMember } = require("../models/member");
+const { selectAllMember, findEmail, createMember, checkSaldo, topupSaldo } = require("../models/member");
 const commonHelper = require("../helper/common");
 const authHelper = require("../helper/auth");
 
@@ -15,7 +15,6 @@ let memberController = {
                 delete member.password;
                 return member;
             });
-
             commonHelper.response(res, members, 200, "Data berhasil diambil");
         } catch (error) {
             console.log(error);
@@ -94,6 +93,7 @@ let memberController = {
             }
             delete member.id;
             delete member.password;
+            delete member.balance;
             const payload = { email: member.email };
             member.token = authHelper.generateToken(payload);
             // member.refreshToken = authHelper.refreshToken(payload);
@@ -104,6 +104,37 @@ let memberController = {
         }
     },
 
+    saldoCheck: async (req, res) => {
+        const memberId = req.user.id;
+        memberModel.getBalance(memberId)
+          .then(member => {
+            if (!member) {
+              return res.status(404).json({ message: 'Member not found' });
+            }
+            res.status(200).json({
+              message: 'Balance retrieved successfully',
+              balance: member.balance,
+            });
+          })
+          .catch(err => {
+            res.status(500).json({ message: err.message });
+          });      
+    },
+
+    saldoTopUp: async (req, res) => {
+        const { amount } = req.body;
+        const memberId = req.user.id;
+        memberModel.topUp(memberId, amount)
+          .then(member => {
+            res.status(200).json({
+              message: 'Top up successful',
+              balance: member.balance,
+            });
+          })
+          .catch(err => {
+            res.status(500).json({ message: err.message });
+          });      
+    },
 
     profile: async (req, res) => {
         const email = req.payload.email;

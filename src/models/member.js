@@ -32,8 +32,42 @@ const findEmail = (email) =>{
   })
   )
 }
+
+const checkSaldo = (memberId) => {
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT balance FROM members WHERE id = $1', [memberId], (error, result) => {
+      if (!error) {
+        resolve(result.rows[0]);
+      } else {
+        reject(error);
+      }
+    });
+  });
+}
+
+const topupSaldo = (memberId, amount) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      'UPDATE members SET balance = balance + $1 WHERE id = $2 RETURNING balance',
+      [amount, memberId],
+      (error, result) => {
+        if (!error) {
+          resolve(result.rows[0]);
+        } else {
+          reject(error);
+        }
+      }
+    );
+  });
+
+}
+
+
+
 module.exports = {
     selectAllMember,
     createMember,
-    findEmail
+    findEmail,
+    checkSaldo,
+    topupSaldo
 };
