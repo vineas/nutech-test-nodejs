@@ -1,10 +1,7 @@
 const Pool = require("../config/db");
 const { 
     checkSaldo, 
-    topupSaldo, 
-    getServiceByCode, 
-    updateMemberBalance, 
-    createTransaction 
+    topupSaldo
 } = require("../models/transaction");
 const commonHelper = require("../helper/common");
 
