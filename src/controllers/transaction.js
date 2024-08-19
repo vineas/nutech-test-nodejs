@@ -15,7 +15,8 @@ let transactionController = {
         try {
             const result = await getAllTransactions();
             const transaction = result.rows;
-            commonHelper.response(res, transaction, 200, "Get History Berhasil");
+            const filteredTransactions = transaction.map(({ transaction_id, member_id, ...rest }) => rest);            
+            commonHelper.response(res, filteredTransactions, 200, "Get History Berhasil");
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: "Terjadi kesalahan pada server" });
@@ -72,10 +73,20 @@ let transactionController = {
           const newBalance = currentBalance - serviceTariff;
           await updateMemberBalance(member_id, newBalance);
       
+          const generateInvoiceNumber = () => {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const dateString = `${year}${month}${day}`;
+            const uniquePart = uuidv4().split('-')[0].slice(0, 3).toUpperCase();
+            const invoiceNumber = `INV${dateString}-${uniquePart}`;
+            return invoiceNumber;
+          };
           const transactionId = uuidv4();
-          const invoice_number = `INV_${uuidv4().split('-')[0]}`;
+          const invoice_number = generateInvoiceNumber();
       
-          const transaction = await createTransaction(transactionId, invoice_number, service_code, 'top-up', serviceTariff, member_id);      
+          await createTransaction(transactionId, invoice_number, service_code, 'PAYMENT', serviceTariff, member_id);      
           res.status(200).json({ 
             message: 'Transaction berhasil',
             });
