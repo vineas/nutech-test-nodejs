@@ -2,6 +2,12 @@
 
 This document provides an overview of the routes available in the application.
 
+# Screenshots ERD
+
+ <tr>
+    <td> <img width="650px" src="./docs/readme/ERD-Nutech-Test.jpg" border="0"  alt="Register" /></td>
+  </tr>
+
 ## Routes Overview
 
 ### Member Routes
