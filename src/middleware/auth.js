@@ -10,17 +10,17 @@ const protect =(req,res,next)=>{
         next()
     }else{
         res.json({
-            message : "server need token"
+            message : "Server butuh token"
         })
     }
   }catch(error){
     console.log(error);
     if(error && error.name ==='JsonWebTokenError'){
-      next(new createError(400,'Token invalid'))
+      next(new createError(400,'Token tidak valid'))
     }else if(error && error.name ==='TokenExpiredError'){
-      next(new createError(400,'Token expired'))
+      next(new createError(400,'Token kadaluwarsa'))
     }else{
-      next(new createError(400,'Token not active'))
+      next(new createError(400,'Token tidak aktif'))
     }
   }
 };

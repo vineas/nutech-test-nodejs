@@ -6,6 +6,4 @@ router
     .get("/", memberController.getAllMember)
     .post("/register", memberController.registerMember)
     .post("/login", memberController.loginMember)
-    .get('/saldo/:id', protect, memberController.saldoCheck)
-    .post('/topup/:id', protect, memberController.saldoTopUp)
 module.exports = router;
