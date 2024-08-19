@@ -45,6 +45,11 @@ This document provides an overview of the routes available in the application.
 - **Controller:** `transactionController.makeTransaction`
 - **Middleware:** `protect` (Authentication required)
 
+#### `GET /transaction/history`
+- **Description:** Retrieves all transaction or history.
+- **Controller:** `transactionController.history`
+- **Middleware:** `protect` (Authentication required)
+
 ## Middleware
 
 - **`protect`**: Ensures that the user is authenticated before accessing protected routes.

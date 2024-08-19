@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { 
+    getAllTransactions,
     checkSaldo, 
     topupSaldo,
     getServiceByCode,
@@ -10,6 +11,17 @@ const {
 const commonHelper = require("../helper/common");
 
 let transactionController = {
+    history: async (req, res) => {
+        try {
+            const result = await getAllTransactions();
+            const transaction = result.rows;
+            commonHelper.response(res, transaction, 200, "Get History Berhasil");
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Terjadi kesalahan pada server" });
+        }
+    },
+
     saldoCheck: async (req, res) => {
         const id = String(req.params.id);
         checkSaldo(id)

@@ -1,5 +1,9 @@
 const Pool = require("../config/db");
 
+const getAllTransactions = async () => {
+  return Pool.query(`SELECT * FROM transactions`)
+};
+
 const checkSaldo = (member_id) => {
     return Pool.query(`SELECT balance FROM members WHERE member_id = '${member_id}'`)
   }
@@ -48,6 +52,7 @@ const checkSaldo = (member_id) => {
   
   
   module.exports = {
+    getAllTransactions,
     checkSaldo,
     topupSaldo,
     getServiceByCode,
