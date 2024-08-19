@@ -6,6 +6,6 @@ const serviceRouter = require("../routes/service");
 
 router.use("/member", memberRouter);
 router.use("/transaction", transactionRouter);
-router.use("/services", serviceRouter);
+router.use("/service", serviceRouter);
 
 module.exports = router;
