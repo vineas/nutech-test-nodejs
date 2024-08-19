@@ -43,6 +43,7 @@ This document provides an overview of the routes available in the application.
 #### `POST /transaction/:id`
 - **Description:** Makes a transaction for a member.
 - **Controller:** `transactionController.makeTransaction`
+- **Middleware:** `protect` (Authentication required)
 
 ## Middleware
 
