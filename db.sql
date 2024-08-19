@@ -9,15 +9,14 @@ CREATE TABLE members (
 
 CREATE TABLE services (
   service_code VARCHAR PRIMARY KEY,
-  service_name VARCHAR NOT NULL,
+  service_name VARCHAR,
   service_icon TEXT,
-  service_tariff NUMERIC NOT NULL
+  service_tariff NUMERIC
 );
 
 CREATE TABLE transactions (
   transaction_id VARCHAR PRIMARY KEY,
   invoice_number VARCHAR NOT NULL UNIQUE,
-  service_name VARCHAR NOT NULL,
   transaction_type VARCHAR NOT NULL,
   total_amount NUMERIC NOT NULL,
   created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
