@@ -104,27 +104,36 @@ let memberController = {
         }
     },
 
+    // saldoCheck: async (req, res) => {
+    //     const memberId = String(req.params.id);
+    //     memberModel.checkSaldo(memberId)
+    //       .then(member => {
+    //         if (!member) {
+    //           return res.status(404).json({ message: 'Member not found' });
+    //         }
+    //         res.status(200).json({
+    //           message: 'Balance retrieved successfully',
+    //           balance: member.balance,
+    //         });
+    //       })
+    //       .catch(err => {
+    //         res.status(500).json({ message: err.message });
+    //       });      
+    // },
+
     saldoCheck: async (req, res) => {
-        const memberId = req.user.id;
-        memberModel.getBalance(memberId)
-          .then(member => {
-            if (!member) {
-              return res.status(404).json({ message: 'Member not found' });
-            }
-            res.status(200).json({
-              message: 'Balance retrieved successfully',
-              balance: member.balance,
-            });
-          })
-          .catch(err => {
-            res.status(500).json({ message: err.message });
-          });      
-    },
+        const id = String(req.params.id);
+        checkSaldo(id)
+          .then((result) =>
+            commonHelper.response(res, result.rows, 200, "Cek saldo sukses")
+          )
+          .catch((err) => res.send(err));
+      },
 
     saldoTopUp: async (req, res) => {
         const { amount } = req.body;
         const memberId = req.user.id;
-        memberModel.topUp(memberId, amount)
+        memberModel.topupSaldo(memberId, amount)
           .then(member => {
             res.status(200).json({
               message: 'Top up successful',

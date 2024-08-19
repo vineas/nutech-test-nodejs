@@ -33,17 +33,21 @@ const findEmail = (email) =>{
   )
 }
 
-const checkSaldo = (memberId) => {
-  return new Promise((resolve, reject) => {
-    pool.query('SELECT balance FROM members WHERE id = $1', [memberId], (error, result) => {
-      if (!error) {
-        resolve(result.rows[0]);
-      } else {
-        reject(error);
-      }
-    });
-  });
+const checkSaldo = (id) => {
+  return Pool.query(`SELECT balance FROM members WHERE id = '${id}'`)
 }
+
+// const checkSaldo = (memberId) => {
+//   return new Promise((resolve, reject) => {
+//     pool.query('SELECT balance FROM members WHERE id = $1', [memberId], (error, result) => {
+//       if (!error) {
+//         resolve(result.rows[0]);
+//       } else {
+//         reject(error);
+//       }
+//     });
+//   });
+// }
 
 const topupSaldo = (memberId, amount) => {
   return new Promise((resolve, reject) => {
