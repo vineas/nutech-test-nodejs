@@ -7,13 +7,11 @@ const checkSaldo = (id) => {
   const topupSaldo = (id, top_up_amount) => {
     return new Promise((resolve, reject) => {
       Pool.query(
-        'UPDATE members SET balance = balance + $1 WHERE id = $2 RETURNING balance',
-        [top_up_amount, id],
-        (error, result) => {
-          if (error) {
-            reject(error);
+        `UPDATE members SET balance = balance + ${top_up_amount} WHERE id = '${id}' RETURNING balance`, (error, result) => {
+          if (!error) {
+            resolve(result.rows[0])
           } else {
-            resolve(result.rows[0]);
+            reject(error)
           }
         }
       );
