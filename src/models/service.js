@@ -1,5 +1,9 @@
 const Pool = require("../config/db");
 
+const selectAllService = () => {
+    return Pool.query(`SELECT * FROM services `)
+  }
+
 const insertService = (data) => {
     const { 
         service_code, 
@@ -20,5 +24,6 @@ const insertService = (data) => {
 
 
 module.exports = {
+    selectAllService,
     insertService
 }
