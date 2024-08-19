@@ -5,7 +5,7 @@ const { protect } = require("../middleware/auth");
 router 
     .get('/saldo/:id', protect, transactionController.saldoCheck)
     .post('/topup/:id', protect, transactionController.saldoTopUp)
-    .post('/:id', protect, transactionController.transactionService)
-    .get('/history', protect, transactionController.history)
+    .post('/:id',  transactionController.transactionService)
+    .get('/history',  transactionController.history)
 
 module.exports = router;
