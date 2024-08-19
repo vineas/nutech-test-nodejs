@@ -43,9 +43,9 @@ const checkSaldo = (member_id) => {
     await Pool.query(`UPDATE members SET balance = ${newBalance} WHERE member_id = '${member_id}'`);
   };
 
-  const createTransaction = async (transactionId, invoice_number, service_code, transactionType, totalAmount, member_id) => {
+  const createTransaction = async (transaction_id, invoice_number, service_code, transaction_type, total_amount, member_id) => {
     await Pool.query(
-      `INSERT INTO transactions (transaction_id, invoice_number, service_code, transaction_type, total_amount, member_id) VALUES ('${transactionId}', '${invoice_number}', '${service_code}', '${transactionType}', ${totalAmount}, '${member_id}')`);
+      `INSERT INTO transactions (transaction_id, invoice_number, service_code, transaction_type, total_amount, member_id) VALUES ('${transaction_id}', '${invoice_number}', '${service_code}', '${transaction_type}', ${total_amount}, '${member_id}')`);
   };
   
   

@@ -57,7 +57,6 @@ This document provides an overview of the routes available in the application.
 - **Middleware:** `protect` (Authentication required)
 
 ## Middleware
-
 - **`protect`**: Ensures that the user is authenticated before accessing protected routes.
 ---
 
