@@ -21,15 +21,15 @@ const createMember = (data) => {
   );
 };
 
-const findEmail = (email) =>{
-  return  new Promise ((resolve,reject)=> 
-  Pool.query(`SELECT * FROM members WHERE email='${email}'`,(error,result)=>{
-    if(!error){
-      resolve(result)
-    }else{
-      reject(error)
-    }
-  })
+const findEmail = (email) => {
+  return new Promise((resolve, reject) =>
+    Pool.query(`SELECT * FROM members WHERE email='${email}'`, (error, result) => {
+      if (!error) {
+        resolve(result)
+      } else {
+        reject(error)
+      }
+    })
   )
 }
 
@@ -37,41 +37,26 @@ const checkSaldo = (id) => {
   return Pool.query(`SELECT balance FROM members WHERE id = '${id}'`)
 }
 
-// const checkSaldo = (memberId) => {
-//   return new Promise((resolve, reject) => {
-//     pool.query('SELECT balance FROM members WHERE id = $1', [memberId], (error, result) => {
-//       if (!error) {
-//         resolve(result.rows[0]);
-//       } else {
-//         reject(error);
-//       }
-//     });
-//   });
-// }
-
-const topupSaldo = (memberId, amount) => {
+const topupSaldo = (id, top_up_amount) => {
   return new Promise((resolve, reject) => {
-    pool.query(
+    Pool.query(
       'UPDATE members SET balance = balance + $1 WHERE id = $2 RETURNING balance',
-      [amount, memberId],
+      [top_up_amount, id],
       (error, result) => {
-        if (!error) {
-          resolve(result.rows[0]);
-        } else {
+        if (error) {
           reject(error);
+        } else {
+          resolve(result.rows[0]);
         }
       }
     );
   });
-
 }
 
-
-
 module.exports = {
-    selectAllMember,
-    createMember,
-    findEmail,
-    checkSaldo,
-    topupSaldo
+  selectAllMember,
+  createMember,
+  findEmail,
+  checkSaldo,
+  topupSaldo
 };

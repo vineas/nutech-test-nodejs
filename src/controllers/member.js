@@ -130,20 +130,23 @@ let memberController = {
           .catch((err) => res.send(err));
       },
 
-    saldoTopUp: async (req, res) => {
-        const { amount } = req.body;
-        const memberId = req.user.id;
-        memberModel.topupSaldo(memberId, amount)
-          .then(member => {
-            res.status(200).json({
-              message: 'Top up successful',
-              balance: member.balance,
-            });
-          })
-          .catch(err => {
-            res.status(500).json({ message: err.message });
-          });      
-    },
+      saldoTopUp: async (req, res) => {
+        try {
+          const { top_up_amount } = req.body;
+          const id = req.params.id;      
+          if (isNaN(top_up_amount) || top_up_amount <= 0) {
+            return res.status(400).json({ message: 'top_up_amount tidak valid.' });
+          }
+          const member = await topupSaldo(id, top_up_amount);
+          return res.status(200).json({
+            message: 'Top up balance berhasil',
+            balance: member.balance,
+          });
+        } catch (err) {
+          return res.status(500).json({ message: err.message });
+        }
+      }
+      ,
 
     profile: async (req, res) => {
         const email = req.payload.email;
