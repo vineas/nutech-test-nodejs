@@ -69,7 +69,6 @@ let transactionController = {
           if (currentBalance < serviceTariff) {
             return res.status(400).json({ message: 'Saldo tidak cukup' });
           }
-      
           const newBalance = currentBalance - serviceTariff;
           await updateMemberBalance(member_id, newBalance);
       
