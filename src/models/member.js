@@ -7,7 +7,7 @@ const selectAllMember = () => {
 
 const createMember = (data) => {
   const { 
-    id, 
+    member_id, 
     email, 
     first_name, 
     last_name, 
@@ -16,12 +16,12 @@ const createMember = (data) => {
   return new Promise((resolve, reject) =>
     Pool.query(
       `INSERT INTO members(
-      id, 
+      member_id, 
       email,
       first_name, 
       last_name, 
       password
-      ) VALUES('${id}','${email}','${first_name}','${last_name}','${passwordHash}')`,
+      ) VALUES('${member_id}','${email}','${first_name}','${last_name}','${passwordHash}')`,
       (error, result) => {
         if (!error) {
           resolve(result);

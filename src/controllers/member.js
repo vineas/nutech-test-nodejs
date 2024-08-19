@@ -47,9 +47,9 @@ let memberController = {
                 return res.status(409).json({ message: "Email sudah digunakan" });
             }
             const passwordHash = bcrypt.hashSync(password, 10);
-            const id = uuidv4();
+            const member_id = uuidv4();
             const data = {
-                id,
+                member_id,
                 email,
                 first_name,
                 last_name,
@@ -91,7 +91,7 @@ let memberController = {
             if (!isValidPassword) {
                 return res.status(401).json({ message: "Password salah" });
             }
-            delete member.id;
+            delete member.member_id;
             delete member.password;
             delete member.balance;
             const payload = { email: member.email };
